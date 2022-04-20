@@ -45,7 +45,7 @@ class MainTabBarViewController: UITabBarController {
         }
         
         
-        self.tabBar.tintColor = .black
+        self.tabBar.tintColor = .blue
     }
     
     

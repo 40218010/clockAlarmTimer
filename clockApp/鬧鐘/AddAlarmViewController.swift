@@ -13,8 +13,19 @@ class AddAlarmViewController: UIViewController {
         super.viewDidLoad()
         
         view.backgroundColor = UIColor.systemTeal
-        title = "加入鬧鐘"
+        setUpNavigationBar()
 
+    }
+    
+    private func setUpNavigationBar() {
+        navigationItem.title = "加入鬧鐘"
+        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "取消",
+                                                           style: .done,
+                                                           target: self,
+                                                           action: nil)
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .save,
+                                                            target: self,
+                                                            action: nil)
     }
     
 
