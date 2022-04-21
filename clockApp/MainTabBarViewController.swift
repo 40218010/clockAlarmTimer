@@ -14,11 +14,9 @@ class MainTabBarViewController: UITabBarController {
         
         setUpTabBar()
 
-
-        
     }
     
-    func setUpTabBar() {
+   private func setUpTabBar() {
         
         let controller1 = SecondViewController()
         controller1.title = "世界時鐘"
@@ -47,6 +45,8 @@ class MainTabBarViewController: UITabBarController {
         
         self.tabBar.tintColor = .blue
     }
+    
+
     
     
     
