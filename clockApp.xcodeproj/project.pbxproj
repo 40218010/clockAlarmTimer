@@ -18,6 +18,7 @@
 		756786B2280D997400AC4EAE /* FifthViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 756786B1280D997400AC4EAE /* FifthViewController.swift */; };
 		756786B5280EC8A600AC4EAE /* AddAlarmViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 756786B4280EC8A600AC4EAE /* AddAlarmViewController.swift */; };
 		75BF900D2811207C000D110F /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 75BF900C2811207C000D110F /* SnapKit */; };
+		75BF90112816CECA000D110F /* WeekViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75BF90102816CECA000D110F /* WeekViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -33,6 +34,7 @@
 		756786AF280D996500AC4EAE /* FourthViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FourthViewController.swift; sourceTree = "<group>"; };
 		756786B1280D997400AC4EAE /* FifthViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FifthViewController.swift; sourceTree = "<group>"; };
 		756786B4280EC8A600AC4EAE /* AddAlarmViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddAlarmViewController.swift; sourceTree = "<group>"; };
+		75BF90102816CECA000D110F /* WeekViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -85,6 +87,7 @@
 			children = (
 				756786AD280D8E8D00AC4EAE /* ThirdViewController.swift */,
 				756786B4280EC8A600AC4EAE /* AddAlarmViewController.swift */,
+				75BF90102816CECA000D110F /* WeekViewController.swift */,
 			);
 			path = "鬧鐘";
 			sourceTree = "<group>";
@@ -171,6 +174,7 @@
 				756786AE280D8E8D00AC4EAE /* ThirdViewController.swift in Sources */,
 				75678698280D4F2E00AC4EAE /* AppDelegate.swift in Sources */,
 				7567869A280D4F2E00AC4EAE /* SceneDelegate.swift in Sources */,
+				75BF90112816CECA000D110F /* WeekViewController.swift in Sources */,
 				756786B5280EC8A600AC4EAE /* AddAlarmViewController.swift in Sources */,
 				756786B2280D997400AC4EAE /* FifthViewController.swift in Sources */,
 			);

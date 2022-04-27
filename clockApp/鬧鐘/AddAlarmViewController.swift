@@ -13,7 +13,7 @@ class AddAlarmViewController: UIViewController, UITableViewDelegate, UITableView
     let items = ["重複", "標籤", "提示聲", "稍後提醒"]
     
     
-    let datepicker: UIDatePicker = {
+    let timePicker: UIDatePicker = {
         let myDatePicker = UIDatePicker()
         myDatePicker.datePickerMode = .time
         myDatePicker.preferredDatePickerStyle = .wheels
@@ -24,6 +24,7 @@ class AddAlarmViewController: UIViewController, UITableViewDelegate, UITableView
         let myTableView = UITableView(frame: CGRect.zero, style: .insetGrouped)
         myTableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
         myTableView.backgroundColor = .clear
+        myTableView.isScrollEnabled = false
         return myTableView
     }()
     
@@ -60,32 +61,32 @@ class AddAlarmViewController: UIViewController, UITableViewDelegate, UITableView
         tableView.delegate = self
         tableView.dataSource = self
         
-        
     }
     
     
     private func setUpView() {
         
-        //time picker position
-        let view1 = datepicker
-        view.addSubview(view1)
-        view1.snp.makeConstraints { make in
+        view.addSubview(timePicker)
+        timePicker.snp.makeConstraints { make in
             make.height.equalToSuperview().multipliedBy(0.25)
         }
         
-        
-        
-        let mainVStackView = UIStackView(arrangedSubviews: [view1, tableView])
+        let mainVStackView = UIStackView(arrangedSubviews: [timePicker, tableView])
         mainVStackView.axis = .vertical
+        mainVStackView.alignment = .center
         view.addSubview(mainVStackView)
         mainVStackView.snp.makeConstraints { make in
             make.top.equalTo(view.safeAreaLayoutGuide.snp.top)
             make.centerX.equalToSuperview()
-            make.leading.equalTo(16)
+            make.leading.equalToSuperview()
             make.bottom.equalToSuperview()
         }
-        
-        
+        timePicker.snp.makeConstraints { make in
+            make.width.equalToSuperview().offset(-32)
+        }
+        tableView.snp.makeConstraints { make in
+            make.width.equalToSuperview()
+        }
     }
     
     
@@ -124,6 +125,32 @@ class AddAlarmViewController: UIViewController, UITableViewDelegate, UITableView
         cell.backgroundColor = .secondarySystemFill
         
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        switch(indexPath.row) {
+            
+        case 0:
+            let vc = WeekViewController()
+            vc.title = "重複"
+            self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "返回",
+                                                                    style: .done,
+                                                                    target: self,
+                                                                    action: nil)
+            navigationController?.pushViewController(vc, animated: true)
+            
+        default:
+            break
+        }
+        
+        
+        
+        
+        tableView.deselectRow(at: indexPath, animated: true)
+        
+        
+        
     }
     
     
