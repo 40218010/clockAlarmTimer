@@ -7,10 +7,22 @@
 
 import UIKit
 
-class WeekViewController: UIViewController ,UITableViewDelegate, UITableViewDataSource {
+protocol DayPickerManagerDelegate: AnyObject {
+    func didUpdateSelectedDays(_ days: Set<Day>)
+}
+
+
+class DayPickerViewController: UIViewController {
     
-    var alarmItems: [String] = []
-    let items = ["星期一", "星期二", "星期三", "星期四", "星期五", "星期六", "星期日"]
+    
+    let oneWeek = Day.allCases
+    var selectedDays = Set<Day>() {
+        didSet {
+            delegate?.didUpdateSelectedDays(selectedDays)
+        }
+    }
+    weak var delegate: DayPickerManagerDelegate?
+    
     
     let tableView: UITableView = {
         let myTableView = UITableView(frame: CGRect.zero, style: .insetGrouped)
@@ -24,7 +36,7 @@ class WeekViewController: UIViewController ,UITableViewDelegate, UITableViewData
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        view.backgroundColor = .secondarySystemGroupedBackground
+        view.backgroundColor = .systemGroupedBackground
         
         setTableView()
     }
@@ -34,45 +46,51 @@ class WeekViewController: UIViewController ,UITableViewDelegate, UITableViewData
         super.loadView()
         view = tableView
     }
-
+    
     private func setTableView() {
         tableView.delegate = self
         tableView.dataSource = self
     }
-
     
+}
+
+
+//MARK: - UITableViewDataSource
+extension DayPickerViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return items.count
+        return oneWeek.count
     }
-
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-
+        
         let cell = UITableViewCell(style: .value1, reuseIdentifier: "r1")
-        let day = items[indexPath.row]
-        cell.textLabel?.text = day
-        let isSelected = alarmItems.contains(day)
+        let day = oneWeek[indexPath.row]
+        cell.textLabel?.text = day.dayString
+        let isSelected = selectedDays.contains(day)
         cell.accessoryType = isSelected ? .checkmark : .none
-        cell.backgroundColor = .secondarySystemFill
-
+        //        cell.backgroundColor = .secondarySystemFill
+        
         return cell
     }
+    
+}
 
+//MARK: - UITableViewDelegate
+extension DayPickerViewController: UITableViewDelegate {
     //display a checkmark or an accessory view to indicate the selected state.
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        let day = items[indexPath.row]
-        if !alarmItems.contains(day) {
-            alarmItems.append(day)
+        let day = oneWeek[indexPath.row]
+        if selectedDays.contains(day) {
+            selectedDays.remove(day)
         } else {
-            if let index = alarmItems.firstIndex(of: day) {
-                alarmItems.remove(at: index)
-            }
+            selectedDays.insert(day)
         }
+        
         tableView.reloadRows(at: [indexPath], with: .automatic)
     }
-    
- 
 }
+
 
