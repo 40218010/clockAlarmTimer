@@ -32,11 +32,20 @@ struct AlarmModel: Identifiable {
         case [.sat, .sun]:
             return "週末"
         default:
+            
             let dayText = selectedDays
-                .sorted(by: { $0.rawValue > $1.rawValue })
-                .map { $0.dayString }
+                .sorted(by: { $0.rawValue < $1.rawValue })
+                .map {
+                    let str = $0.dayString
+                    if selectedDays.count > 1 {
+                        return str.replacingOccurrences(of: "星期", with: "週")
+                    }
+                    return str
+                }
                 .joined(separator: ", ")
+        
             return dayText
+            
         }
     }
     

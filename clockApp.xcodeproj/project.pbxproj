@@ -17,7 +17,6 @@
 		756786B0280D996500AC4EAE /* R2ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 756786AF280D996500AC4EAE /* R2ViewController.swift */; };
 		756786B2280D997400AC4EAE /* R1ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 756786B1280D997400AC4EAE /* R1ViewController.swift */; };
 		756786B5280EC8A600AC4EAE /* AddAlarmViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 756786B4280EC8A600AC4EAE /* AddAlarmViewController.swift */; };
-		7583A1432824F94400128F3A /* EditAlarmViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7583A1422824F94400128F3A /* EditAlarmViewController.swift */; };
 		759A9988281984E9008DC460 /* TagViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 759A9987281984E9008DC460 /* TagViewController.swift */; };
 		75BF900D2811207C000D110F /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 75BF900C2811207C000D110F /* SnapKit */; };
 		75BF90112816CECA000D110F /* DayPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75BF90102816CECA000D110F /* DayPickerViewController.swift */; };
@@ -38,7 +37,6 @@
 		756786AF280D996500AC4EAE /* R2ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = R2ViewController.swift; sourceTree = "<group>"; };
 		756786B1280D997400AC4EAE /* R1ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = R1ViewController.swift; sourceTree = "<group>"; };
 		756786B4280EC8A600AC4EAE /* AddAlarmViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddAlarmViewController.swift; sourceTree = "<group>"; };
-		7583A1422824F94400128F3A /* EditAlarmViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditAlarmViewController.swift; sourceTree = "<group>"; };
 		759A9987281984E9008DC460 /* TagViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagViewController.swift; sourceTree = "<group>"; };
 		75BF90102816CECA000D110F /* DayPickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayPickerViewController.swift; sourceTree = "<group>"; };
 		75D95A59281A817700F9AEF5 /* AlarmModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmModel.swift; sourceTree = "<group>"; };
@@ -111,7 +109,6 @@
 		75D95A57281A7FD500F9AEF5 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				7583A1422824F94400128F3A /* EditAlarmViewController.swift */,
 				756786AD280D8E8D00AC4EAE /* L2ViewController.swift */,
 				756786B4280EC8A600AC4EAE /* AddAlarmViewController.swift */,
 				75BF90102816CECA000D110F /* DayPickerViewController.swift */,
@@ -213,7 +210,6 @@
 				759A9988281984E9008DC460 /* TagViewController.swift in Sources */,
 				7567869A280D4F2E00AC4EAE /* SceneDelegate.swift in Sources */,
 				75BF90112816CECA000D110F /* DayPickerViewController.swift in Sources */,
-				7583A1432824F94400128F3A /* EditAlarmViewController.swift in Sources */,
 				756786B5280EC8A600AC4EAE /* AddAlarmViewController.swift in Sources */,
 				756786B2280D997400AC4EAE /* R1ViewController.swift in Sources */,
 				75D95A5A281A817700F9AEF5 /* AlarmModel.swift in Sources */,

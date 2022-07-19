@@ -19,19 +19,18 @@ class AddAlarmViewController: UIViewController {
     
     var didSaveEdit: ((AlarmModel) -> Void)?
     
-    var selectedAlarm: AlarmModel?
-    var showButton: Bool = false
-    
-    
     weak var delegate: AlarmListManagerDelegate?
     
     let titles = AddAlarmCell.allCases
-    var alarmModel = AlarmModel() {
+    
+    var isEditMode: Bool = false
+    
+    var alarmModel: AlarmModel! {
         didSet{
+            timePicker.date = alarmModel.time
             tableView.reloadData()
         }
     }
-    
     
     private let timePicker: UIDatePicker = {
         let myDatePicker = UIDatePicker()
@@ -60,9 +59,6 @@ class AddAlarmViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        timePicker.date = selectedAlarm?.time ?? Date()
-        
         view.backgroundColor = .systemGroupedBackground
         
         self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "返回",
@@ -71,15 +67,23 @@ class AddAlarmViewController: UIViewController {
                                                                 action: nil)
         
         
-        
+        checkAlarm()
         setUpNavigationBar()
         setUpTableView()
         setUpView()
         
         deleteButton.addTarget(self, action: #selector(deleteButtonClicked), for: .touchUpInside)
-        
+        timePicker.addTarget(self, action: #selector(changeAlarmTime), for: .valueChanged)
     }
     
+    private func checkAlarm() {
+        if alarmModel == nil {
+            isEditMode = false
+            alarmModel = AlarmModel()
+        } else {
+            isEditMode = true
+        }
+    }
     
     private func setUpNavigationBar() {
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: "取消",
@@ -105,38 +109,18 @@ class AddAlarmViewController: UIViewController {
     }
     
     @objc func saveButtonPressed() {
-        
-        alarmModel.time = timePicker.date
-        
-        if let selectedAlarm = selectedAlarm {
-            print("haha\(selectedAlarm)")
-            
-            didSaveEdit?(selectedAlarm)
-            
-            dismiss(animated: true)
+        // 判斷是編輯或新增
+        if isEditMode {
+            didSaveEdit?(alarmModel)
         } else {
-            let alarmModel = AlarmModel(time: alarmModel.time,
-                         
-                                        selectedDays: alarmModel.selectedDays,
-                                        alarmTag: alarmModel.alarmTag)
             delegate?.didAddAlarm(alarmModel)
         }
+        
+        dismiss(animated: true)
+    }
     
-        
-        //        if let selectedAlarm = selectedA larm {
-        //            print("hahaha\(selectedAlarm)")
-        //            delegate?.updateAlarm(alarm: selectedAlarm)
-        //
-        //        } else {
-        //            let alarmModel = AlarmModel(time: alarmModel.time,
-        //                                        selectedDays: alarmModel.selectedDays,
-        //                                        alarmTag: alarmModel.alarmTag)
-        //            delegate?.didAddAlarm(alarmModel: alarmModel)
-        //        }
-        
-        
-        
-        
+    @objc func changeAlarmTime(_ datePicker: UIDatePicker) {
+        alarmModel.time = datePicker.date
     }
     
     @objc func deleteButtonClicked() {
@@ -153,45 +137,28 @@ class AddAlarmViewController: UIViewController {
     }
     
     
+    
     private func setUpView() {
-        if showButton {
-            let mainVStackView = UIStackView(arrangedSubviews: [timePicker, tableView, deleteButton])
-            mainVStackView.axis = .vertical
-            view.addSubview(mainVStackView)
-            tableView.snp.makeConstraints { make in
-                make.height.equalTo(240)
-                
-            }
+        let mainVStackView = UIStackView(arrangedSubviews: [timePicker, tableView])
+        mainVStackView.axis = .vertical
+        view.addSubview(mainVStackView)
+        if isEditMode {
+            mainVStackView.addArrangedSubview(deleteButton)
             deleteButton.snp.makeConstraints { make in
                 make.height.equalTo(40)
             }
-            
-            mainVStackView.snp.makeConstraints { make in
-                make.top.equalTo(view.safeAreaLayoutGuide.snp.top)
-                make.centerX.equalToSuperview()
-                make.bottom.lessThanOrEqualToSuperview()
-                make.width.equalToSuperview().offset(-32)
-            }
-        } else {
-            
-            let mainVStackView = UIStackView(arrangedSubviews: [timePicker, tableView])
-            mainVStackView.axis = .vertical
-            view.addSubview(mainVStackView)
-            tableView.snp.makeConstraints { make in
-                make.height.equalTo(240)
-            }
-            
-            mainVStackView.snp.makeConstraints { make in
-                make.top.equalTo(view.safeAreaLayoutGuide.snp.top)
-                make.centerX.equalToSuperview()
-                make.bottom.lessThanOrEqualToSuperview()
-                make.width.equalToSuperview().offset(-32)
-            }
         }
-        
-        
+        tableView.snp.makeConstraints { make in
+            make.height.equalTo(240)
+            
+        }
+        mainVStackView.snp.makeConstraints { make in
+            make.top.equalTo(view.safeAreaLayoutGuide.snp.top)
+            make.centerX.equalToSuperview()
+            make.bottom.lessThanOrEqualToSuperview()
+            make.width.equalToSuperview().offset(-32)
+        }
     }
-    
     
     
 }
@@ -232,10 +199,10 @@ extension AddAlarmViewController: UITableViewDataSource {
         
         switch row {
         case .rePeat :
-            cell.detailTextLabel?.text = selectedAlarm?.repeatText ?? alarmModel.repeatText
+            cell.detailTextLabel?.text = alarmModel.repeatText
             cell.accessoryType = .disclosureIndicator
         case .tag :
-            cell.detailTextLabel?.text = selectedAlarm?.alarmTag ?? alarmModel.alarmTag
+            cell.detailTextLabel?.text = alarmModel.alarmTag
             cell.accessoryType = .disclosureIndicator
         case .sound :
             cell.detailTextLabel?.text = "彈跳聲"
@@ -262,13 +229,13 @@ extension AddAlarmViewController: UITableViewDelegate {
         case .rePeat :
             let dayPickerVC = DayPickerViewController()
             dayPickerVC.title = row.title
-            dayPickerVC.selectedDays = selectedAlarm?.selectedDays ?? alarmModel.selectedDays
+            dayPickerVC.selectedDays = alarmModel.selectedDays
             dayPickerVC.delegate = self
             navigationController?.pushViewController(dayPickerVC, animated: true)
         case .tag:
             let tagVC = TagViewController()
             tagVC.title = row.title
-            tagVC.alarmTag = selectedAlarm?.alarmTag ?? alarmModel.alarmTag
+            tagVC.alarmTag = alarmModel.alarmTag
             tagVC.delegate = self
             navigationController?.pushViewController(tagVC, animated: true)
         case .sound:
@@ -286,7 +253,6 @@ extension AddAlarmViewController: UITableViewDelegate {
 extension AddAlarmViewController: DayPickerManagerDelegate {
     func didUpdateSelectedDays(_ days: Set<Day>) {
         alarmModel.selectedDays = days
-        selectedAlarm?.selectedDays = days
     }
 }
 
@@ -294,6 +260,5 @@ extension AddAlarmViewController: DayPickerManagerDelegate {
 extension AddAlarmViewController: AlarmTagManagerDelegate {
     func didUpdateAlarmTag(_ tagText: String) {
         alarmModel.alarmTag = tagText
-        selectedAlarm?.alarmTag = tagText
     }
 }

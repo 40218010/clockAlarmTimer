@@ -29,7 +29,6 @@ class L2ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        view.backgroundColor = UIColor.systemGray
         setUpNavigationBar()
     }
     
@@ -48,15 +47,12 @@ class L2ViewController: UIViewController {
                                                            target: self,
                                                            action: #selector(startEditing(_:)))
         
-        
-        
     }
     
     @objc private func didTapAddButton() {
         let rootVC = AddAlarmViewController()
         let navVC = UINavigationController(rootViewController: rootVC)
         rootVC.title = "加入鬧鐘"
-        rootVC.showButton = false
         rootVC.delegate = self
         present(navVC, animated: true)
     }
@@ -108,7 +104,6 @@ extension L2ViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         
-        
         if editingStyle == .delete {
             print("deleted")
             
@@ -116,8 +111,6 @@ extension L2ViewController: UITableViewDataSource {
             tableView.deleteRows(at: [indexPath], with: .automatic)
         }
     }
-    
-    
     
     
 }
@@ -132,12 +125,9 @@ extension L2ViewController: UITableViewDelegate {
         let navVC = UINavigationController(rootViewController: rootVC)
         present(navVC, animated: true)
         rootVC.title = "編輯鬧鐘"
-        rootVC.showButton = true
-        rootVC.delegate = self
         
         let selectedAlarm = ac.alarms[indexPath.row]
-        rootVC.selectedAlarm = selectedAlarm
-        
+        rootVC.alarmModel = selectedAlarm
         rootVC.didTapDelete = { [weak self] in
             self?.ac.alarms.remove(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .left)
@@ -150,7 +140,7 @@ extension L2ViewController: UITableViewDelegate {
             }
             
         }
-                
+        
     }
     
 }
@@ -158,11 +148,9 @@ extension L2ViewController: UITableViewDelegate {
 
 extension L2ViewController: AlarmListManagerDelegate {
     func didAddAlarm(_ alarmModel: AlarmModel) {
-        dismiss(animated: true)
         self.ac.alarms.append(alarmModel)
         self.tableView.reloadData()
     }
-    
     
 }
 
